@@ -21,12 +21,12 @@ font-family:'Inter',sans-serif;
 
 body{
 background:#000;
-overflow:hidden;
 color:white;
+overflow:hidden;
 height:100vh;
 }
 
-/* VIDEO */
+/* background */
 
 .bg-video{
 position:fixed;
@@ -36,7 +36,6 @@ width:100%;
 height:100%;
 object-fit:cover;
 z-index:-2;
-filter:brightness(.7);
 }
 
 .bg-overlay{
@@ -44,55 +43,64 @@ position:fixed;
 width:100%;
 height:100%;
 background:rgba(0,0,0,.45);
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
 z-index:-1;
 }
 
-/* ENTER SCREEN */
+/* welcome */
 
 .enter-screen{
+
 position:fixed;
 width:100%;
 height:100%;
+
 display:flex;
 justify-content:center;
 align-items:center;
+
 font-size:42px;
 font-weight:800;
+
 cursor:pointer;
-background:rgba(0,0,0,.65);
-z-index:5;
-transition:1s;
+z-index:10;
+
 }
 
-.enter-screen.hidden{
-opacity:0;
-pointer-events:none;
-}
-
-/* MAIN */
+/* main */
 
 .main-ui{
-opacity:0;
-transform:scale(.9);
-transition:1s;
+
+position:fixed;
+
+width:100%;
+height:100%;
+
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
+
+opacity:0;
+pointer-events:none;
+
+transition:1s;
+
 }
 
 .main-ui.show{
+
 opacity:1;
-transform:scale(1);
+pointer-events:auto;
+
 }
 
-/* CARD */
+/* card */
 
 .container{
 
 width:90%;
 max-width:420px;
+
 padding:30px;
 
 border-radius:25px;
@@ -102,17 +110,15 @@ backdrop-filter:blur(35px);
 
 border:1px solid rgba(255,255,255,.15);
 
-box-shadow:
-0 10px 40px rgba(0,0,0,.6),
-0 0 30px rgba(255,255,255,.05);
+box-shadow:0 10px 40px rgba(0,0,0,.6);
 
 text-align:center;
 
-transition:transform .2s ease;
+transition:transform .2s;
 
 }
 
-/* MOBILE FLOAT */
+/* mobile float */
 
 @media(max-width:768px){
 
@@ -130,7 +136,7 @@ animation:float 4s ease-in-out infinite;
 
 }
 
-/* PROFILE */
+/* profile */
 
 .profile-img{
 
@@ -147,22 +153,50 @@ margin:auto;
 
 border:3px solid rgba(255,255,255,.3);
 
-box-shadow:0 0 20px rgba(255,255,255,.25);
-
 }
 
-/* TEXT */
+/* username animation */
 
-h1{
-margin-top:15px;
+.username{
+
+font-size:34px;
 font-weight:800;
+
+margin-top:15px;
+
+background:linear-gradient(
+90deg,
+white,
+#7df9ff,
+white
+);
+
+background-size:200%;
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+animation:nameGlow 3s linear infinite;
+
 }
+
+@keyframes nameGlow{
+
+0%{background-position:0%}
+100%{background-position:200%}
+
+}
+
+/* bio */
 
 .bio{
+
 font-size:14px;
 opacity:.8;
 margin-top:5px;
+
 height:20px;
+
 }
 
 .cursor{
@@ -173,26 +207,11 @@ animation:blink 1s infinite;
 50%{opacity:0}
 }
 
-/* EMOJI BOUNCE */
-
-.emoji{
-display:inline-block;
-animation:bounce 1.2s infinite;
-}
-
-@keyframes bounce{
-
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-4px)}
-
-}
-
-/* SOCIAL */
+/* social icons */
 
 .social-icons{
 
 margin-top:15px;
-
 display:flex;
 justify-content:center;
 gap:25px;
@@ -202,16 +221,27 @@ font-size:22px;
 }
 
 .social-icons a{
+
 color:white;
+
+display:inline-block;
+
 transition:.25s;
+
 }
+
+/* hover effect */
 
 .social-icons a:hover{
-transform:translateY(-3px) scale(1.2);
-filter:drop-shadow(0 0 8px white);
+
+transform:scale(1.25) translateY(-3px);
+
+filter:drop-shadow(0 0 6px white)
+drop-shadow(0 0 12px white);
+
 }
 
-/* LINKS */
+/* links */
 
 .link{
 
@@ -223,7 +253,6 @@ padding:15px;
 border-radius:15px;
 
 text-decoration:none;
-
 color:white;
 
 background:rgba(255,255,255,.08);
@@ -237,23 +266,19 @@ transition:.3s;
 .link:hover{
 
 transform:translateY(-3px);
-
 background:rgba(255,255,255,.16);
-
-box-shadow:0 5px 25px rgba(255,255,255,.15);
 
 }
 
 .donate{
 
 background:linear-gradient(45deg,#00ffd5,#00bfff);
-
 color:black;
 font-weight:600;
 
 }
 
-/* VOLUME */
+/* volume */
 
 .volume-box{
 
@@ -269,32 +294,35 @@ background:rgba(255,255,255,.12);
 backdrop-filter:blur(20px);
 
 padding:10px 14px;
-
 border-radius:25px;
 
 box-shadow:0 5px 25px rgba(0,0,0,.6);
 
+opacity:0;
 transition:.3s;
 
 }
 
-/* ICON */
+.volume-box.show{
+opacity:1;
+}
 
 #musicIcon{
 font-size:20px;
 cursor:pointer;
 }
 
-/* PC SLIDER */
+/* slider */
 
 .volume-slider{
 
-width:120px;
-appearance:none;
+width:0;
+opacity:0;
 
 height:4px;
-
 border-radius:10px;
+
+appearance:none;
 
 background:linear-gradient(
 to right,
@@ -302,24 +330,30 @@ white 100%,
 rgba(255,255,255,.25) 100%
 );
 
-cursor:pointer;
+transition:.3s;
+
+}
+
+.volume-box:hover .volume-slider{
+
+width:120px;
+opacity:1;
 
 }
 
 .volume-slider::-webkit-slider-thumb{
-
 appearance:none;
-width:12px;
-height:12px;
-
-border-radius:50%;
-background:white;
-
-cursor:pointer;
-
+width:0;
+height:0;
 }
 
-/* MOBILE */
+.volume-slider::-moz-range-thumb{
+width:0;
+height:0;
+border:none;
+}
+
+/* mobile */
 
 @media(max-width:768px){
 
@@ -351,7 +385,7 @@ Welcome kub eiei
 
 <div class="profile-img"></div>
 
-<h1>expray</h1>
+<h1 class="username">expray</h1>
 
 <div class="bio">
 <span id="bioText"></span><span class="cursor">|</span>
@@ -383,7 +417,7 @@ Welcome kub eiei
 <source src="music.mp3" type="audio/mp3">
 </audio>
 
-<div class="volume-box">
+<div class="volume-box" id="volumeBox">
 
 <i id="musicIcon" class="fas fa-volume-up"></i>
 
@@ -401,99 +435,68 @@ id="volumeSlider"
 
 <script>
 
-/* ENTER */
+/* enter */
 
 const enter=document.getElementById("enter")
 const main=document.getElementById("main")
 const music=document.getElementById("music")
+const volumeBox=document.getElementById("volumeBox")
 
 enter.onclick=()=>{
 
 music.play()
-enter.classList.add("hidden")
 
-setTimeout(()=>{
+enter.style.display="none"
+
 main.classList.add("show")
-},500)
+volumeBox.classList.add("show")
 
 }
 
-/* VOLUME */
+/* volume */
 
 const icon=document.getElementById("musicIcon")
 const slider=document.getElementById("volumeSlider")
 
+function updateSlider(){
+
+const value=slider.value*100
+
+slider.style.background=
+`linear-gradient(to right, white ${value}%, rgba(255,255,255,.25) ${value}%)`
+
+}
+
 slider.addEventListener("input",()=>{
 
 music.volume=slider.value
+updateSlider()
 
 })
 
 icon.onclick=()=>{
 
 if(music.volume>0){
+
 music.volume=0
+slider.value=0
 icon.className="fas fa-volume-mute"
+
 }else{
+
 music.volume=1
+slider.value=1
 icon.className="fas fa-volume-up"
-}
 
 }
 
-/* BIO TYPE */
-
-const texts=[
-'สวัสดีครับผมชื่อ ซัน<span class="emoji">☀️</span>',
-'ขอบคุณทุกคนที่สนับสนุนครับ<span class="emoji">❤️</span>'
-]
-
-let textIndex=0
-let charIndex=0
-let deleting=false
-
-const bio=document.getElementById("bioText")
-
-function type(){
-
-let current=texts[textIndex]
-
-if(!deleting){
-
-bio.innerHTML=current.substring(0,charIndex)
-
-charIndex++
-
-if(charIndex>current.length){
-
-deleting=true
-setTimeout(type,2000)
-return
+updateSlider()
 
 }
 
-}else{
+updateSlider()
 
-bio.innerHTML=current.substring(0,charIndex)
-
-charIndex--
-
-if(charIndex==0){
-
-deleting=false
-textIndex=(textIndex+1)%texts.length
-
-}
-
-}
-
-setTimeout(type,deleting?40:70)
-
-}
-
-type()
-
-/* CARD PARALLAX */
+/* card 3D */
 
 const card=document.getElementById("card")
 
@@ -510,11 +513,8 @@ const centerY=rect.height/2
 const rotateX=(y-centerY)/12
 const rotateY=(centerX-x)/12
 
-card.style.transform=`
-rotateX(${rotateX}deg)
-rotateY(${rotateY}deg)
-scale(1.03)
-`
+card.style.transform=
+`rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`
 
 })
 
@@ -523,6 +523,56 @@ card.addEventListener("mouseleave",()=>{
 card.style.transform="rotateX(0) rotateY(0) scale(1)"
 
 })
+
+/* bio typing loop */
+
+const texts=[
+"สวัสดีครับผมชื่อ ซัน ☀️",
+"ขอบคุณทุกคนที่สนับสนุนครับ ❤️"
+]
+
+let textIndex=0
+let charIndex=0
+let deleting=false
+
+const bio=document.getElementById("bioText")
+
+function type(){
+
+let current=texts[textIndex]
+
+if(!deleting){
+
+bio.textContent=current.substring(0,charIndex)
+charIndex++
+
+if(charIndex>current.length){
+
+deleting=true
+setTimeout(type,2000)
+return
+
+}
+
+}else{
+
+bio.textContent=current.substring(0,charIndex)
+charIndex--
+
+if(charIndex==0){
+
+deleting=false
+textIndex=(textIndex+1)%texts.length
+
+}
+
+}
+
+setTimeout(type,deleting?40:70)
+
+}
+
+type()
 
 </script>
 
