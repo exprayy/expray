@@ -63,6 +63,7 @@ font-size:42px;
 font-weight:800;
 
 cursor:pointer;
+
 z-index:10;
 
 }
@@ -148,15 +149,8 @@ animation:glassMove 7s linear infinite;
 
 @keyframes glassMove{
 
-0%{
-top:-150%;
-left:-150%;
-}
-
-100%{
-top:150%;
-left:150%;
-}
+0%{top:-150%;left:-150%;}
+100%{top:150%;left:150%;}
 
 }
 
@@ -328,9 +322,7 @@ box-shadow:
 @keyframes donatePulse{
 
 0%{transform:scale(1)}
-
 50%{transform:scale(1.05)}
-
 100%{transform:scale(1)}
 
 }
@@ -475,22 +467,22 @@ Welcome kub eiei
 
 <div class="social-icons">
 
-<a href="https://tipme.in.th/expray"><i class="fas fa-hand-holding-dollar"></i></a>
-<a href="https://www.twitch.tv/expray_"><i class="fab fa-twitch"></i></a>
-<a href="https://www.tiktok.com/@expray23"><i class="fab fa-tiktok"></i></a>
-<a href="https://www.youtube.com/@exprayy"><i class="fab fa-youtube"></i></a>
-<a href="https://www.instagram.com/chxyoii_"><i class="fab fa-instagram"></i></a>
-<a href="https://x.com/expray_"><i class="fa-brands fa-x-twitter"></i></a>
+<a href="https://tipme.in.th/expray" target="_blank"><i class="fas fa-hand-holding-dollar"></i></a>
+<a href="https://www.twitch.tv/expray_" target="_blank"><i class="fab fa-twitch"></i></a>
+<a href="https://www.tiktok.com/@expray23" target="_blank"><i class="fab fa-tiktok"></i></a>
+<a href="https://www.youtube.com/@exprayy" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://www.instagram.com/chxyoii_" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://x.com/expray_" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
 
 </div>
 
-<a class="link donate" href="https://tipme.in.th/expray">💸 โดเนทขึ้นจอ</a>
+<a class="link donate" href="https://tipme.in.th/expray" target="_blank">💸 โดเนทขึ้นจอ</a>
 
-<a class="link" href="https://www.twitch.tv/expray_">Twitch</a>
-<a class="link" href="https://www.tiktok.com/@expray23">TikTok</a>
-<a class="link" href="https://www.youtube.com/@exprayy">YouTube</a>
-<a class="link" href="https://www.instagram.com/chxyoii_">Instagram</a>
-<a class="link" href="https://x.com/expray_">X (Twitter)</a>
+<a class="link" href="https://www.twitch.tv/expray_" target="_blank">Twitch</a>
+<a class="link" href="https://www.tiktok.com/@expray23" target="_blank">TikTok</a>
+<a class="link" href="https://www.youtube.com/@exprayy" target="_blank">YouTube</a>
+<a class="link" href="https://www.instagram.com/chxyoii_" target="_blank">Instagram</a>
+<a class="link" href="https://x.com/expray_" target="_blank">X (Twitter)</a>
 
 </div>
 
@@ -504,21 +496,12 @@ Welcome kub eiei
 
 <i id="musicIcon" class="fas fa-volume-up"></i>
 
-<input
-type="range"
-min="0"
-max="1"
-step="0.01"
-value="1"
-class="volume-slider"
-id="volumeSlider"
->
+<input type="range" min="0" max="1" step="0.01" value="1"
+class="volume-slider" id="volumeSlider">
 
 </div>
 
 <script>
-
-/* ENTER */
 
 const enter=document.getElementById("enter")
 const main=document.getElementById("main")
@@ -535,6 +518,28 @@ main.classList.add("show")
 volumeBox.classList.add("show")
 
 }
+
+/* FIX BACK BUTTON */
+
+window.addEventListener("pageshow",(e)=>{
+
+if(e.persisted){
+
+music.play().catch(()=>{})
+
+}
+
+})
+
+document.addEventListener("visibilitychange",()=>{
+
+if(!document.hidden){
+
+music.play().catch(()=>{})
+
+}
+
+})
 
 /* VOLUME */
 
