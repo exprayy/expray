@@ -48,7 +48,7 @@ backdrop-filter:blur(10px);
 z-index:-1;
 }
 
-/* ENTER */
+/* ENTER SCREEN */
 
 .enter-screen{
 position:fixed;
@@ -263,72 +263,70 @@ left:20px;
 
 display:flex;
 align-items:center;
-
 gap:10px;
 
 background:rgba(255,255,255,.12);
 backdrop-filter:blur(20px);
 
-padding:10px;
+padding:10px 14px;
 
-border-radius:20px;
+border-radius:25px;
 
 box-shadow:0 5px 25px rgba(0,0,0,.6);
-
-opacity:0;
-pointer-events:none;
 
 transition:.3s;
 
 }
 
-.volume-box.active{
-
-opacity:1;
-pointer-events:auto;
-
-}
+/* ICON */
 
 #musicIcon{
-
 font-size:20px;
 cursor:pointer;
-transition:.25s;
-
 }
 
-#musicIcon:hover{
-transform:scale(1.15);
-}
+/* PC SLIDER */
 
 .volume-slider{
 
-width:0;
-opacity:0;
-
-transition:.35s;
-
+width:120px;
 appearance:none;
 
 height:4px;
 
 border-radius:10px;
 
-background:linear-gradient(to right,white 100%,rgba(255,255,255,.25) 100%);
+background:linear-gradient(
+to right,
+white 100%,
+rgba(255,255,255,.25) 100%
+);
 
-}
-
-.volume-box:hover .volume-slider{
-
-width:120px;
-opacity:1;
+cursor:pointer;
 
 }
 
 .volume-slider::-webkit-slider-thumb{
+
 appearance:none;
-width:0;
-height:0;
+width:12px;
+height:12px;
+
+border-radius:50%;
+background:white;
+
+cursor:pointer;
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.volume-slider{
+display:none;
+}
+
 }
 
 </style>
@@ -385,7 +383,7 @@ Welcome kub eiei
 <source src="music.mp3" type="audio/mp3">
 </audio>
 
-<div class="volume-box" id="volumeBox">
+<div class="volume-box">
 
 <i id="musicIcon" class="fas fa-volume-up"></i>
 
@@ -408,7 +406,6 @@ id="volumeSlider"
 const enter=document.getElementById("enter")
 const main=document.getElementById("main")
 const music=document.getElementById("music")
-const volumeBox=document.getElementById("volumeBox")
 
 enter.onclick=()=>{
 
@@ -417,8 +414,30 @@ enter.classList.add("hidden")
 
 setTimeout(()=>{
 main.classList.add("show")
-volumeBox.classList.add("active")
 },500)
+
+}
+
+/* VOLUME */
+
+const icon=document.getElementById("musicIcon")
+const slider=document.getElementById("volumeSlider")
+
+slider.addEventListener("input",()=>{
+
+music.volume=slider.value
+
+})
+
+icon.onclick=()=>{
+
+if(music.volume>0){
+music.volume=0
+icon.className="fas fa-volume-mute"
+}else{
+music.volume=1
+icon.className="fas fa-volume-up"
+}
 
 }
 
@@ -474,7 +493,7 @@ setTimeout(type,deleting?40:70)
 
 type()
 
-/* CARD PARALLAX (ONLY HOVER) */
+/* CARD PARALLAX */
 
 const card=document.getElementById("card")
 
