@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
 <title>expray</title>
 
@@ -20,40 +20,59 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-background:black;
-color:white;
-overflow:hidden;
-height:100vh;
+
+background:#000;
+color:#fff;
+
+min-height:100dvh;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+overflow-x:hidden;
+
+padding:20px;
+
 }
 
 /* VIDEO */
 
 .bg-video{
+
 position:fixed;
-top:0;
-left:0;
+inset:0;
+
 width:100%;
 height:100%;
+
 object-fit:cover;
+
 z-index:-2;
+
+transform:translateZ(0);
+will-change:transform;
+
 }
 
 .bg-overlay{
+
 position:fixed;
-width:100%;
-height:100%;
+inset:0;
+
 background:rgba(0,0,0,.45);
 backdrop-filter:blur(10px);
+
 z-index:-1;
+
 }
 
-/* WELCOME */
+/* ENTER SCREEN */
 
 .enter-screen{
 
 position:fixed;
-width:100%;
-height:100%;
+inset:0;
 
 display:flex;
 justify-content:center;
@@ -68,28 +87,31 @@ z-index:10;
 
 }
 
-/* MAIN */
+/* MAIN UI */
 
 .main-ui{
 
 position:fixed;
-width:100%;
-height:100%;
+inset:0;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
+padding:20px;
+
 opacity:0;
 pointer-events:none;
 
-transition:1s;
+transition:opacity .6s;
 
 }
 
 .main-ui.show{
+
 opacity:1;
 pointer-events:auto;
+
 }
 
 /* CARD */
@@ -98,8 +120,9 @@ pointer-events:auto;
 
 position:relative;
 
-width:90%;
+width:100%;
 max-width:420px;
+max-height:90dvh;
 
 padding:30px;
 
@@ -114,13 +137,14 @@ box-shadow:0 10px 40px rgba(0,0,0,.6);
 
 text-align:center;
 
-transition:transform .2s;
-
 overflow:hidden;
+
+transform-style:preserve-3d;
+will-change:transform;
 
 }
 
-/* GLASS REFLECTION */
+/* GLASS LIGHT */
 
 .container::before{
 
@@ -134,41 +158,21 @@ height:200%;
 background:linear-gradient(
 120deg,
 transparent 30%,
-rgba(255,255,255,.25),
+rgba(255,255,255,.2),
 transparent 70%
 );
-
-transform:rotate(25deg);
 
 top:-150%;
 left:-150%;
 
-animation:glassMove 7s linear infinite;
+animation:glassMove 8s linear infinite;
 
 }
 
 @keyframes glassMove{
 
-0%{top:-150%;left:-150%;}
-100%{top:150%;left:150%;}
-
-}
-
-/* MOBILE FLOAT */
-
-@media(max-width:768px){
-
-.container{
-animation:float 4s ease-in-out infinite;
-}
-
-}
-
-@keyframes float{
-
-0%{transform:translateY(0)}
-50%{transform:translateY(-8px)}
-100%{transform:translateY(0)}
+0%{transform:translate(-40%,-40%)}
+100%{transform:translate(40%,40%)}
 
 }
 
@@ -191,7 +195,7 @@ border:3px solid rgba(255,255,255,.3);
 
 }
 
-/* USERNAME */
+/* NAME */
 
 .username{
 
@@ -212,7 +216,7 @@ background-size:200%;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 
-animation:nameGlow 3s linear infinite;
+animation:nameGlow 4s linear infinite;
 
 }
 
@@ -226,10 +230,14 @@ animation:nameGlow 3s linear infinite;
 /* BIO */
 
 .bio{
+
 font-size:14px;
-opacity:.8;
+opacity:.85;
+
 margin-top:5px;
+
 height:20px;
+
 }
 
 .cursor{
@@ -240,14 +248,16 @@ animation:blink 1s infinite;
 50%{opacity:0}
 }
 
-/* SOCIAL ICONS */
+/* SOCIAL */
 
 .social-icons{
 
 margin-top:15px;
+
 display:flex;
 justify-content:center;
 gap:25px;
+
 font-size:22px;
 
 }
@@ -255,14 +265,13 @@ font-size:22px;
 .social-icons a{
 
 color:white;
-display:inline-block;
-transition:.25s;
+transition:transform .25s;
 
 }
 
 .social-icons a:hover{
 
-transform:scale(1.25) translateY(-3px);
+transform:scale(1.25);
 
 filter:
 drop-shadow(0 0 6px white)
@@ -275,6 +284,7 @@ drop-shadow(0 0 12px white);
 .link{
 
 display:block;
+
 margin-top:15px;
 padding:15px;
 
@@ -287,7 +297,7 @@ background:rgba(255,255,255,.08);
 
 border:1px solid rgba(255,255,255,.1);
 
-transition:.3s;
+transition:transform .2s,background .2s;
 
 }
 
@@ -298,61 +308,29 @@ background:rgba(255,255,255,.16);
 
 }
 
-/* DONATE BUTTON */
+/* DONATE */
 
 .donate{
-
-position:relative;
 
 background:linear-gradient(45deg,#00ffd5,#00bfff);
 
 color:black;
 font-weight:700;
 
-overflow:hidden;
-
-animation:donatePulse 2.2s infinite;
-
 box-shadow:
 0 0 15px rgba(0,255,213,.6),
 0 0 40px rgba(0,191,255,.5);
+
+animation:donatePulse 2.5s ease-in-out infinite;
 
 }
 
 @keyframes donatePulse{
 
 0%{transform:scale(1)}
-50%{transform:scale(1.05)}
+50%{transform:scale(1.04)}
 100%{transform:scale(1)}
 
-}
-
-.donate::before{
-
-content:"";
-
-position:absolute;
-
-width:200%;
-height:100%;
-
-top:0;
-left:-120%;
-
-background:linear-gradient(
-120deg,
-transparent,
-rgba(255,255,255,.8),
-transparent
-);
-
-animation:shine 3s infinite;
-
-}
-
-@keyframes shine{
-0%{left:-120%}
-100%{left:120%}
 }
 
 /* VOLUME */
@@ -360,22 +338,25 @@ animation:shine 3s infinite;
 .volume-box{
 
 position:fixed;
+
 top:20px;
 left:20px;
 
 display:flex;
 align-items:center;
-gap:10px;
 
 background:rgba(255,255,255,.12);
+
 backdrop-filter:blur(20px);
 
 padding:10px 14px;
+
 border-radius:25px;
 
 box-shadow:0 5px 25px rgba(0,0,0,.6);
 
 opacity:0;
+
 transition:.3s;
 
 }
@@ -389,61 +370,12 @@ font-size:20px;
 cursor:pointer;
 }
 
-/* SLIDER */
-
-.volume-slider{
-
-width:0;
-opacity:0;
-
-height:4px;
-border-radius:10px;
-
-appearance:none;
-
-background:linear-gradient(
-to right,
-white 100%,
-rgba(255,255,255,.25) 100%
-);
-
-transition:.3s;
-
-}
-
-.volume-box:hover .volume-slider{
-
-width:120px;
-opacity:1;
-
-}
-
-.volume-slider::-webkit-slider-thumb{
-appearance:none;
-width:0;
-height:0;
-}
-
-.volume-slider::-moz-range-thumb{
-width:0;
-height:0;
-border:none;
-}
-
-@media(max-width:768px){
-
-.volume-slider{
-display:none;
-}
-
-}
-
 </style>
 </head>
 
 <body>
 
-<video autoplay muted loop class="bg-video">
+<video autoplay muted loop playsinline webkit-playsinline class="bg-video">
 <source src="Background2.mp4" type="video/mp4">
 </video>
 
@@ -493,15 +425,12 @@ Welcome kub eiei
 </audio>
 
 <div class="volume-box" id="volumeBox">
-
 <i id="musicIcon" class="fas fa-volume-up"></i>
-
-<input type="range" min="0" max="1" step="0.01" value="1"
-class="volume-slider" id="volumeSlider">
-
 </div>
 
 <script>
+
+/* ENTER */
 
 const enter=document.getElementById("enter")
 const main=document.getElementById("main")
@@ -510,7 +439,7 @@ const volumeBox=document.getElementById("volumeBox")
 
 enter.onclick=()=>{
 
-music.play()
+music.play().catch(()=>{})
 
 enter.style.display="none"
 
@@ -519,23 +448,15 @@ volumeBox.classList.add("show")
 
 }
 
-/* FIX BACK BUTTON */
+/* FIX MOBILE VIDEO */
 
-window.addEventListener("pageshow",(e)=>{
-
-if(e.persisted){
-
-music.play().catch(()=>{})
-
-}
-
-})
+const bgVideo=document.querySelector(".bg-video")
 
 document.addEventListener("visibilitychange",()=>{
 
 if(!document.hidden){
 
-music.play().catch(()=>{})
+bgVideo.play().catch(()=>{})
 
 }
 
@@ -544,87 +465,50 @@ music.play().catch(()=>{})
 /* VOLUME */
 
 const icon=document.getElementById("musicIcon")
-const slider=document.getElementById("volumeSlider")
-
-function updateSlider(){
-
-const value=slider.value*100
-
-slider.style.background=
-`linear-gradient(to right, white ${value}%, rgba(255,255,255,.25) ${value}%)`
-
-}
-
-slider.addEventListener("input",()=>{
-
-music.volume=slider.value
-
-if(slider.value==0){
-
-music.muted=true
-icon.className="fas fa-volume-mute"
-
-}else{
-
-music.muted=false
-icon.className="fas fa-volume-up"
-
-}
-
-updateSlider()
-
-})
 
 icon.onclick=()=>{
 
-if(music.muted || music.volume==0){
+if(music.muted){
 
 music.muted=false
-music.volume=1
-slider.value=1
 icon.className="fas fa-volume-up"
 
 }else{
 
 music.muted=true
-slider.value=0
 icon.className="fas fa-volume-mute"
 
 }
 
-updateSlider()
-
 }
 
-updateSlider()
-
-/* CARD 3D */
+/* CARD 3D GPU */
 
 const card=document.getElementById("card")
+
+let mouseX=0
+let mouseY=0
 
 card.addEventListener("mousemove",(e)=>{
 
 const rect=card.getBoundingClientRect()
 
-const x=e.clientX-rect.left
-const y=e.clientY-rect.top
+mouseX=(e.clientX-rect.left)/rect.width-.5
+mouseY=(e.clientY-rect.top)/rect.height-.5
 
-const centerX=rect.width/2
-const centerY=rect.height/2
+})
 
-const rotateX=(y-centerY)/12
-const rotateY=(centerX-x)/12
+function animate(){
 
 card.style.transform=
-`rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`
 
-})
+`rotateX(${mouseY*-10}deg) rotateY(${mouseX*10}deg) scale(1.02)`
 
-card.addEventListener("mouseleave",()=>{
+requestAnimationFrame(animate)
 
-card.style.transform="rotateX(0) rotateY(0) scale(1)"
+}
 
-})
+animate()
 
 /* BIO LOOP */
 
