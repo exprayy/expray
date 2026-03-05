@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>expray</title>
 
@@ -32,7 +32,13 @@ align-items:center;
 
 overflow-x:hidden;
 
-padding:20px;
+/* SAFE AREA FIX */
+
+padding-left:20px;
+padding-right:20px;
+
+padding-top:calc(env(safe-area-inset-top) + 20px);
+padding-bottom:calc(env(safe-area-inset-bottom) + 20px);
 
 }
 
@@ -87,7 +93,7 @@ z-index:10;
 
 }
 
-/* MAIN UI */
+/* MAIN */
 
 .main-ui{
 
@@ -118,11 +124,12 @@ pointer-events:auto;
 
 .container{
 
-position:relative;
-
 width:100%;
 max-width:420px;
-max-height:90dvh;
+
+max-height:calc(100dvh - 60px);
+
+overflow:auto;
 
 padding:30px;
 
@@ -137,42 +144,8 @@ box-shadow:0 10px 40px rgba(0,0,0,.6);
 
 text-align:center;
 
-overflow:hidden;
-
 transform-style:preserve-3d;
 will-change:transform;
-
-}
-
-/* GLASS LIGHT */
-
-.container::before{
-
-content:"";
-
-position:absolute;
-
-width:200%;
-height:200%;
-
-background:linear-gradient(
-120deg,
-transparent 30%,
-rgba(255,255,255,.2),
-transparent 70%
-);
-
-top:-150%;
-left:-150%;
-
-animation:glassMove 8s linear infinite;
-
-}
-
-@keyframes glassMove{
-
-0%{transform:translate(-40%,-40%)}
-100%{transform:translate(40%,40%)}
 
 }
 
@@ -482,7 +455,7 @@ icon.className="fas fa-volume-mute"
 
 }
 
-/* CARD 3D GPU */
+/* CARD 3D */
 
 const card=document.getElementById("card")
 
@@ -501,7 +474,6 @@ mouseY=(e.clientY-rect.top)/rect.height-.5
 function animate(){
 
 card.style.transform=
-
 `rotateX(${mouseY*-10}deg) rotateY(${mouseX*10}deg) scale(1.02)`
 
 requestAnimationFrame(animate)
