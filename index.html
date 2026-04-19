@@ -12,8 +12,6 @@
 
 <style>
 
-/* === เดิมทั้งหมดของคุณ === */
-
 *{
 margin:0;
 padding:0;
@@ -45,6 +43,8 @@ width:100%;
 height:100%;
 object-fit:cover;
 z-index:-2;
+transform:translateZ(0);
+will-change:transform;
 }
 
 .bg-overlay{
@@ -55,7 +55,7 @@ backdrop-filter:blur(10px);
 z-index:-1;
 }
 
-/* ENTER */
+/* ENTER SCREEN */
 
 .enter-screen{
 position:fixed;
@@ -204,7 +204,7 @@ animation:donatePulse 2.5s ease-in-out infinite;
 100%{transform:scale(1)}
 }
 
-/* VOLUME BOX */
+/* VOLUME */
 
 .volume-box{
 position:fixed;
@@ -213,11 +213,15 @@ left:20px;
 display:flex;
 align-items:center;
 gap:8px;
+
 background:rgba(255,255,255,.12);
 backdrop-filter:blur(20px);
+
 padding:10px 14px;
 border-radius:25px;
+
 box-shadow:0 5px 25px rgba(0,0,0,.6);
+
 opacity:0;
 transition:.3s;
 }
@@ -229,12 +233,13 @@ font-size:20px;
 cursor:pointer;
 }
 
-/* ==== NEW SLIDER ==== */
+/* ===== NEW (เพิ่มอย่างเดียว) ===== */
 
 #volumeSlider{
 width:0;
 opacity:0;
-transition:.25s;
+transition:.25s ease;
+
 appearance:none;
 height:4px;
 background:rgba(255,255,255,.8);
@@ -243,7 +248,7 @@ cursor:pointer;
 }
 
 .volume-box:hover #volumeSlider{
-width:90px;
+width:100px;
 opacity:1;
 }
 
@@ -261,8 +266,8 @@ box-shadow:0 0 8px #00ffd5;
 
 <body>
 
-<video autoplay muted loop playsinline class="bg-video">
-<source src="Background2.mp4">
+<video autoplay muted loop playsinline webkit-playsinline class="bg-video">
+<source src="Background2.mp4" type="video/mp4">
 </video>
 
 <div class="bg-overlay"></div>
@@ -284,30 +289,33 @@ Welcome kub eiei
 </div>
 
 <div class="social-icons">
-<a href="#"><i class="fas fa-hand-holding-dollar"></i></a>
-<a href="#"><i class="fab fa-twitch"></i></a>
-<a href="#"><i class="fab fa-tiktok"></i></a>
-<a href="#"><i class="fab fa-youtube"></i></a>
-<a href="#"><i class="fab fa-instagram"></i></a>
-<a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+
+<a href="https://easydonate.app/expray_" target="_blank"><i class="fas fa-hand-holding-dollar"></i></a>
+<a href="https://www.twitch.tv/expray_" target="_blank"><i class="fab fa-twitch"></i></a>
+<a href="https://www.tiktok.com/@expray23" target="_blank"><i class="fab fa-tiktok"></i></a>
+<a href="https://www.youtube.com/@exprayy" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://www.instagram.com/chxyoii_" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://x.com/expray_" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+
 </div>
 
-<a class="link donate">💸 โดเนทขึ้นจอ</a>
+<a class="link donate" href="https://easydonate.app/expray_" target="_blank">💸 โดเนทขึ้นจอ</a>
 
-<a class="link">Twitch</a>
-<a class="link">TikTok</a>
-<a class="link">YouTube</a>
-<a class="link">Instagram</a>
-<a class="link">X (Twitter)</a>
+<a class="link" href="https://www.twitch.tv/expray_" target="_blank">Twitch</a>
+<a class="link" href="https://www.tiktok.com/@expray23" target="_blank">TikTok</a>
+<a class="link" href="https://www.youtube.com/@exprayy" target="_blank">YouTube</a>
+<a class="link" href="https://www.instagram.com/chxyoii_" target="_blank">Instagram</a>
+<a class="link" href="https://x.com/expray_" target="_blank">X (Twitter)</a>
 
 </div>
 
 </div>
 
 <audio id="music" loop>
-<source src="music.mp3">
+<source src="music.mp3" type="audio/mp3">
 </audio>
 
+<!-- 🔥 แก้แค่ตรงนี้ -->
 <div class="volume-box" id="volumeBox">
 <i id="musicIcon" class="fas fa-volume-up"></i>
 <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
@@ -315,7 +323,7 @@ Welcome kub eiei
 
 <script>
 
-/* === เดิม === */
+/* ENTER */
 
 const enter=document.getElementById("enter")
 const main=document.getElementById("main")
@@ -323,23 +331,37 @@ const music=document.getElementById("music")
 const volumeBox=document.getElementById("volumeBox")
 
 enter.onclick=()=>{
-music.muted=false
-music.play()
+music.play().catch(()=>{})
 enter.style.display="none"
 main.classList.add("show")
 volumeBox.classList.add("show")
 }
 
-/* volume icon */
+/* FIX MOBILE VIDEO */
+
+const bgVideo=document.querySelector(".bg-video")
+
+document.addEventListener("visibilitychange",()=>{
+if(!document.hidden){
+bgVideo.play().catch(()=>{})
+}
+})
+
+/* VOLUME */
 
 const icon=document.getElementById("musicIcon")
 
 icon.onclick=()=>{
-music.muted=!music.muted
-icon.className=music.muted?"fas fa-volume-mute":"fas fa-volume-up"
+if(music.muted){
+music.muted=false
+icon.className="fas fa-volume-up"
+}else{
+music.muted=true
+icon.className="fas fa-volume-mute"
+}
 }
 
-/* === NEW SLIDER === */
+/* ===== NEW (เพิ่มอย่างเดียว) ===== */
 
 const slider=document.getElementById("volumeSlider")
 
@@ -358,7 +380,9 @@ icon.className="fas fa-volume-up"
 /* CARD 3D */
 
 const card=document.getElementById("card")
-let mouseX=0,mouseY=0
+
+let mouseX=0
+let mouseY=0
 
 card.addEventListener("mousemove",(e)=>{
 const rect=card.getBoundingClientRect()
@@ -367,34 +391,50 @@ mouseY=(e.clientY-rect.top)/rect.height-.5
 })
 
 function animate(){
-card.style.transform=`rotateX(${mouseY*-10}deg) rotateY(${mouseX*10}deg)`
+card.style.transform=`rotateX(${mouseY*-10}deg) rotateY(${mouseX*10}deg) scale(1.02)`
 requestAnimationFrame(animate)
 }
+
 animate()
 
-/* BIO */
+/* BIO LOOP */
 
 const texts=[
 "สวัสดีครับผมชื่อ ซัน ☀️",
-"Thanks for your support kub ❤️"
+"Thanks for your support kub jubjub❤️"
 ]
 
-let i=0,j=0,del=false
+let textIndex=0
+let charIndex=0
+let deleting=false
+
 const bio=document.getElementById("bioText")
 
 function type(){
-let t=texts[i]
 
-if(!del){
-bio.textContent=t.substring(0,j++)
-if(j>t.length){del=true;setTimeout(type,2000);return}
+let current=texts[textIndex]
+
+if(!deleting){
+bio.textContent=current.substring(0,charIndex)
+charIndex++
+if(charIndex>current.length){
+deleting=true
+setTimeout(type,2000)
+return
+}
 }else{
-bio.textContent=t.substring(0,j--)
-if(j==0){del=false;i=(i+1)%texts.length}
+bio.textContent=current.substring(0,charIndex)
+charIndex--
+if(charIndex==0){
+deleting=false
+textIndex=(textIndex+1)%texts.length
+}
 }
 
-setTimeout(type,del?40:70)
+setTimeout(type,deleting?40:70)
+
 }
+
 type()
 
 </script>
