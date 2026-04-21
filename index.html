@@ -12,126 +12,84 @@
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
 body{
-background:#000;
-color:#fff;
+background:#000;color:#fff;
 min-height:100dvh;
-display:flex;
-justify-content:center;
-align-items:center;
+display:flex;justify-content:center;align-items:center;
 overflow-x:hidden;
-
 padding:20px;
 }
 
 /* VIDEO */
-
 .bg-video{
-position:fixed;
-inset:0;
-width:100%;
-height:100%;
-object-fit:cover;
-z-index:-2;
+position:fixed;inset:0;
+width:100%;height:100%;
+object-fit:cover;z-index:-2;
 }
-
 .bg-overlay{
-position:fixed;
-inset:0;
+position:fixed;inset:0;
 background:rgba(0,0,0,.5);
 backdrop-filter:blur(12px);
 z-index:-1;
 }
 
 /* ENTER */
-
 .enter-screen{
-position:fixed;
-inset:0;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:36px;
-font-weight:800;
-cursor:pointer;
-z-index:10;
+position:fixed;inset:0;
+display:flex;justify-content:center;align-items:center;
+font-size:36px;font-weight:800;
+cursor:pointer;z-index:10;
 }
 
 /* MAIN */
-
 .main-ui{
-width:100%;
-display:flex;
-justify-content:center;
-opacity:0;
-pointer-events:none;
+opacity:0;pointer-events:none;
 transition:.6s;
 }
-
 .main-ui.show{
-opacity:1;
-pointer-events:auto;
+opacity:1;pointer-events:auto;
 }
 
 /* CARD */
-
 .container{
-width:100%;
-max-width:420px;
-
+width:100%;max-width:420px;
 padding:28px 24px;
-
 border-radius:25px;
 
 background:rgba(255,255,255,.06);
 backdrop-filter:blur(35px);
 
 border:1px solid rgba(255,255,255,.15);
-
 box-shadow:0 15px 50px rgba(0,0,0,.6);
 
 text-align:center;
 
-display:flex;
-flex-direction:column;
-gap:12px;
+transform-style:preserve-3d;
+will-change:transform;
 }
 
 /* PROFILE */
-
 .profile-img{
-width:100px;
-height:100px;
+width:100px;height:100px;
 border-radius:50%;
 background:url("Profile.jpg") center/cover;
 margin:auto;
 }
 
 /* NAME */
-
 .username{
-font-size:32px;
-font-weight:800;
+font-size:32px;font-weight:800;
 background:linear-gradient(90deg,white,#7df9ff,white);
 background-size:200%;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 animation:nameGlow 4s linear infinite;
 }
+@keyframes nameGlow{100%{background-position:200%}}
 
-@keyframes nameGlow{
-100%{background-position:200%}
-}
-
-/* BIO FIX */
-
+/* BIO */
 .bio{
 font-size:14px;
 opacity:.85;
@@ -140,33 +98,41 @@ line-height:1.5;
 }
 
 /* SOCIAL */
-
 .social-icons{
 display:flex;
 justify-content:center;
 gap:22px;
 font-size:20px;
-margin-top:5px;
+margin-top:10px;
+}
+.social-icons a{
+color:white;
+transition:.2s;
+}
+.social-icons a:hover{
+transform:scale(1.2);
 }
 
 /* LINKS */
-
 .link{
 display:block;
+margin-top:12px;
 padding:14px;
 border-radius:14px;
+text-decoration:none;
+color:white;
+
 background:rgba(255,255,255,.08);
 border:1px solid rgba(255,255,255,.1);
+
 transition:.2s;
 }
-
 .link:hover{
 transform:translateY(-3px);
 background:rgba(255,255,255,.18);
 }
 
 /* DONATE */
-
 .donate{
 background:linear-gradient(45deg,#00ffd5,#00bfff);
 color:#000;
@@ -175,32 +141,37 @@ box-shadow:0 0 20px rgba(0,255,213,.5);
 }
 
 /* VOLUME */
-
 .volume-box{
 position:fixed;
-top:20px;
-left:20px;
-display:flex;
-align-items:center;
-gap:8px;
+top:20px;left:20px;
+
+display:flex;align-items:center;gap:8px;
+
 background:rgba(255,255,255,.12);
 backdrop-filter:blur(20px);
+
 padding:10px 14px;
 border-radius:25px;
+
 opacity:0;
 transition:.3s;
 }
-
 .volume-box.show{opacity:1;}
 
+#musicIcon{
+font-size:20px;
+cursor:pointer;
+}
+
+/* SLIDER */
 #volumeSlider{
 width:0;
 opacity:0;
 transition:.25s;
 }
 
-/* PC */
-@media (hover:hover){
+/* PC ONLY */
+@media (hover:hover) and (pointer:fine){
 .volume-box:hover #volumeSlider{
 width:100px;
 opacity:1;
@@ -210,30 +181,6 @@ opacity:1;
 /* MOBILE */
 @media (hover:none){
 #volumeSlider{display:none;}
-}
-
-/* MOBILE FIX LAYOUT */
-
-@media (max-width:500px){
-
-.container{
-padding:24px 18px;
-gap:10px;
-}
-
-.profile-img{
-width:90px;
-height:90px;
-}
-
-.username{
-font-size:28px;
-}
-
-.link{
-padding:12px;
-}
-
 }
 
 </style>
@@ -253,7 +200,7 @@ Welcome kub eiei
 
 <div class="main-ui" id="main">
 
-<div class="container">
+<div class="container" id="card">
 
 <div class="profile-img"></div>
 
@@ -264,22 +211,23 @@ Welcome kub eiei
 </div>
 
 <div class="social-icons">
-<i class="fas fa-hand-holding-dollar"></i>
-<i class="fab fa-twitch"></i>
-<i class="fab fa-tiktok"></i>
-<i class="fab fa-youtube"></i>
-<i class="fab fa-instagram"></i>
-<i class="fab fa-discord"></i>
-<i class="fa-brands fa-x-twitter"></i>
+<a href="https://easydonate.app/expray_" target="_blank"><i class="fas fa-hand-holding-dollar"></i></a>
+<a href="https://www.twitch.tv/expray_" target="_blank"><i class="fab fa-twitch"></i></a>
+<a href="https://www.tiktok.com/@expray23" target="_blank"><i class="fab fa-tiktok"></i></a>
+<a href="https://www.youtube.com/@exprayy" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://www.instagram.com/chxyoii_" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://discord.gg/DmZM4JKJS4" target="_blank"><i class="fab fa-discord"></i></a>
+<a href="https://x.com/expray_" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
 </div>
 
-<a class="link donate">💸 โดเนทขึ้นจอ</a>
-<a class="link">Twitch</a>
-<a class="link">TikTok</a>
-<a class="link">YouTube</a>
-<a class="link">Instagram</a>
-<a class="link">Discord</a>
-<a class="link">X (Twitter)</a>
+<a class="link donate" href="https://easydonate.app/expray_" target="_blank">💸 โดเนทขึ้นจอ</a>
+
+<a class="link" href="https://www.twitch.tv/expray_" target="_blank">Twitch</a>
+<a class="link" href="https://www.tiktok.com/@expray23" target="_blank">TikTok</a>
+<a class="link" href="https://www.youtube.com/@exprayy" target="_blank">YouTube</a>
+<a class="link" href="https://www.instagram.com/chxyoii_" target="_blank">Instagram</a>
+<a class="link" href="https://discord.gg/DmZM4JKJS4" target="_blank">Discord</a>
+<a class="link" href="https://x.com/expray_" target="_blank">X (Twitter)</a>
 
 </div>
 
@@ -296,23 +244,69 @@ Welcome kub eiei
 
 <script>
 
+/* ENTER */
 const enter=document.getElementById("enter")
 const main=document.getElementById("main")
 const music=document.getElementById("music")
 const volumeBox=document.getElementById("volumeBox")
 
 enter.onclick=()=>{
+music.muted=false
 music.play().catch(()=>{})
 enter.style.display="none"
 main.classList.add("show")
 volumeBox.classList.add("show")
 }
 
-/* BIO FIX */
+/* VOLUME */
+const icon=document.getElementById("musicIcon")
+const slider=document.getElementById("volumeSlider")
 
+// sync เริ่มต้น
+music.volume = slider.value
+
+icon.onclick=()=>{
+music.muted=!music.muted
+icon.className=music.muted?"fas fa-volume-mute":"fas fa-volume-up"
+}
+
+// slider ใช้ได้จริง
+slider.addEventListener("input",()=>{
+music.muted=false
+music.volume=parseFloat(slider.value)
+
+if(slider.value==0){
+icon.className="fas fa-volume-mute"
+}else if(slider.value<0.5){
+icon.className="fas fa-volume-down"
+}else{
+icon.className="fas fa-volume-up"
+}
+})
+
+/* CARD 3D (PC ONLY) */
+const card=document.getElementById("card")
+
+if(window.matchMedia("(hover: hover)").matches){
+let mouseX=0,mouseY=0
+
+card.addEventListener("mousemove",(e)=>{
+const rect=card.getBoundingClientRect()
+mouseX=(e.clientX-rect.left)/rect.width-.5
+mouseY=(e.clientY-rect.top)/rect.height-.5
+})
+
+function animate(){
+card.style.transform=`rotateX(${mouseY*-10}deg) rotateY(${mouseX*10}deg)`
+requestAnimationFrame(animate)
+}
+animate()
+}
+
+/* BIO */
 const texts=[
 "สวัสดีครับผมชื่อ ซัน ☀️",
-"Thanks for your support ❤️"
+"Thanks for your support kub jubjub❤️"
 ]
 
 let i=0,j=0,del=false
@@ -331,7 +325,6 @@ if(j==0){del=false;i=(i+1)%texts.length}
 
 setTimeout(type,del?40:70)
 }
-
 type()
 
 </script>
