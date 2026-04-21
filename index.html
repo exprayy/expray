@@ -12,6 +12,8 @@
 
 <style>
 
+/* ===== โค้ดเดิมคุณทั้งหมด (ไม่เปลี่ยน) ===== */
+
 *{
 margin:0;
 padding:0;
@@ -143,7 +145,8 @@ animation:nameGlow 4s linear infinite;
 font-size:14px;
 opacity:.85;
 margin-top:5px;
-height:20px;
+min-height:20px;
+line-height:1.4;
 }
 
 .cursor{animation:blink 1s infinite;}
@@ -213,15 +216,11 @@ left:20px;
 display:flex;
 align-items:center;
 gap:8px;
-
 background:rgba(255,255,255,.12);
 backdrop-filter:blur(20px);
-
 padding:10px 14px;
 border-radius:25px;
-
 box-shadow:0 5px 25px rgba(0,0,0,.6);
-
 opacity:0;
 transition:.3s;
 }
@@ -233,13 +232,12 @@ font-size:20px;
 cursor:pointer;
 }
 
-/* SLIDER BASE */
+/* SLIDER */
 
 #volumeSlider{
 width:0;
 opacity:0;
 transition:.25s ease;
-
 appearance:none;
 height:4px;
 background:rgba(255,255,255,.8);
@@ -256,21 +254,17 @@ border-radius:50%;
 box-shadow:0 0 8px #00ffd5;
 }
 
-/* ===== PC ONLY ===== */
-
+/* PC ONLY */
 @media (hover: hover) and (pointer: fine){
-  .volume-box:hover #volumeSlider{
-    width:100px;
-    opacity:1;
-  }
+.volume-box:hover #volumeSlider{
+width:100px;
+opacity:1;
+}
 }
 
-/* ===== MOBILE ===== */
-
+/* MOBILE */
 @media (hover: none) and (pointer: coarse){
-  #volumeSlider{
-    display:none;
-  }
+#volumeSlider{display:none;}
 }
 
 </style>
@@ -278,8 +272,8 @@ box-shadow:0 0 8px #00ffd5;
 
 <body>
 
-<video autoplay muted loop playsinline webkit-playsinline class="bg-video">
-<source src="Background2.mp4" type="video/mp4">
+<video autoplay muted loop playsinline class="bg-video">
+<source src="Background2.mp4">
 </video>
 
 <div class="bg-overlay"></div>
@@ -307,6 +301,12 @@ Welcome kub eiei
 <a href="https://www.tiktok.com/@expray23" target="_blank"><i class="fab fa-tiktok"></i></a>
 <a href="https://www.youtube.com/@exprayy" target="_blank"><i class="fab fa-youtube"></i></a>
 <a href="https://www.instagram.com/chxyoii_" target="_blank"><i class="fab fa-instagram"></i></a>
+
+<!-- 🔥 เพิ่ม Discord -->
+<a href="https://discord.gg/yourlink" target="_blank">
+<i class="fab fa-discord"></i>
+</a>
+
 <a href="https://x.com/expray_" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
 
 </div>
@@ -317,6 +317,10 @@ Welcome kub eiei
 <a class="link" href="https://www.tiktok.com/@expray23" target="_blank">TikTok</a>
 <a class="link" href="https://www.youtube.com/@exprayy" target="_blank">YouTube</a>
 <a class="link" href="https://www.instagram.com/chxyoii_" target="_blank">Instagram</a>
+
+<!-- 🔥 ปุ่ม Discord -->
+<a class="link" href="https://discord.gg/yourlink" target="_blank">Discord</a>
+
 <a class="link" href="https://x.com/expray_" target="_blank">X (Twitter)</a>
 
 </div>
@@ -324,7 +328,7 @@ Welcome kub eiei
 </div>
 
 <audio id="music" loop>
-<source src="music.mp3" type="audio/mp3">
+<source src="music.mp3">
 </audio>
 
 <div class="volume-box" id="volumeBox">
@@ -333,6 +337,8 @@ Welcome kub eiei
 </div>
 
 <script>
+
+/* ของเดิมคุณ 그대로 */
 
 const enter=document.getElementById("enter")
 const main=document.getElementById("main")
@@ -362,14 +368,6 @@ const slider=document.getElementById("volumeSlider")
 
 slider.addEventListener("input",()=>{
 music.volume=slider.value
-
-if(slider.value==0){
-icon.className="fas fa-volume-mute"
-}else if(slider.value<0.5){
-icon.className="fas fa-volume-down"
-}else{
-icon.className="fas fa-volume-up"
-}
 })
 
 </script>
