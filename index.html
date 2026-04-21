@@ -19,18 +19,23 @@ background:#000;color:#fff;
 min-height:100dvh;
 display:flex;justify-content:center;align-items:center;
 padding:20px;
-overflow-x:hidden;
+overflow:hidden;
 }
 
-/* VIDEO */
+/* VIDEO FIX */
 .bg-video{
-position:fixed;inset:0;
-width:100%;height:100%;
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
 object-fit:cover;
 z-index:-2;
 }
+
+/* overlay */
 .bg-overlay{
-position:fixed;inset:0;
+position:fixed;
+inset:0;
 background:rgba(0,0,0,.5);
 backdrop-filter:blur(12px);
 z-index:-1;
@@ -38,10 +43,15 @@ z-index:-1;
 
 /* ENTER */
 .enter-screen{
-position:fixed;inset:0;
-display:flex;justify-content:center;align-items:center;
-font-size:36px;font-weight:800;
-cursor:pointer;z-index:10;
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:36px;
+font-weight:800;
+cursor:pointer;
+z-index:10;
 }
 
 /* MAIN */
@@ -58,8 +68,8 @@ pointer-events:auto;
 /* CARD */
 .container{
 width:100%;
-max-width:480px;
-padding:32px 28px;
+max-width:520px;
+padding:32px;
 border-radius:28px;
 
 background:rgba(255,255,255,.06);
@@ -67,14 +77,11 @@ backdrop-filter:blur(35px);
 
 border:1px solid rgba(255,255,255,.15);
 
-box-shadow:
-0 20px 60px rgba(0,0,0,.6),
-inset 0 0 20px rgba(255,255,255,.05);
+box-shadow:0 20px 60px rgba(0,0,0,.6);
 
 text-align:center;
 
 transform-style:preserve-3d;
-will-change:transform;
 }
 
 /* PROFILE */
@@ -90,23 +97,17 @@ margin:auto;
 font-size:34px;
 font-weight:800;
 margin-top:12px;
-
 background:linear-gradient(90deg,white,#7df9ff,white);
-background-size:200%;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-
-animation:nameGlow 4s linear infinite;
 }
-@keyframes nameGlow{100%{background-position:200%}}
 
 /* BIO */
 .bio{
 font-size:14px;
 opacity:.85;
 min-height:22px;
-line-height:1.5;
-margin-top:4px;
+margin-top:5px;
 }
 
 /* SOCIAL */
@@ -114,15 +115,8 @@ margin-top:4px;
 display:flex;
 justify-content:center;
 gap:24px;
-font-size:21px;
+font-size:20px;
 margin-top:12px;
-}
-.social-icons a{
-color:white;
-transition:.2s;
-}
-.social-icons a:hover{
-transform:scale(1.2);
 }
 
 /* LINKS */
@@ -133,55 +127,34 @@ padding:15px;
 border-radius:16px;
 text-decoration:none;
 color:white;
-
 background:rgba(255,255,255,.08);
 border:1px solid rgba(255,255,255,.1);
-
-transition:.2s;
-}
-.link:hover{
-transform:translateY(-4px);
-background:rgba(255,255,255,.18);
-}
-
-/* DONATE */
-.donate{
-background:linear-gradient(45deg,#00ffd5,#00bfff);
-color:#000;
-font-weight:700;
-box-shadow:0 0 25px rgba(0,255,213,.5);
 }
 
 /* VOLUME */
 .volume-box{
 position:fixed;
-top:20px;left:20px;
+top:20px;
+left:20px;
 display:flex;
 align-items:center;
 gap:8px;
-
 background:rgba(255,255,255,.12);
-backdrop-filter:blur(20px);
-
 padding:10px 14px;
 border-radius:25px;
-
 opacity:0;
 transition:.3s;
 }
 .volume-box.show{opacity:1;}
 
-#musicIcon{font-size:20px;cursor:pointer;}
-
-/* SLIDER */
 #volumeSlider{
 width:0;
 opacity:0;
 transition:.25s;
 }
 
-/* PC ONLY */
-@media (hover:hover) and (pointer:fine){
+/* PC */
+@media (hover:hover){
 .volume-box:hover #volumeSlider{
 width:110px;
 opacity:1;
@@ -193,34 +166,12 @@ opacity:1;
 #volumeSlider{display:none;}
 }
 
-/* DESKTOP BOOST */
-@media (min-width:1024px){
-
-.container{
-max-width:520px;
-padding:36px 32px;
-}
-
-.username{font-size:36px;}
-
-.link{
-padding:16px;
-font-size:15px;
-}
-
-.social-icons{
-gap:28px;
-font-size:22px;
-}
-
-}
-
 </style>
 </head>
 
 <body>
 
-<video autoplay muted loop class="bg-video">
+<video autoplay muted loop playsinline webkit-playsinline class="bg-video" id="bgVideo">
 <source src="Background2.mp4">
 </video>
 
@@ -262,7 +213,6 @@ Welcome kub eiei
 <a class="link" href="https://x.com/expray_" target="_blank">X (Twitter)</a>
 
 </div>
-
 </div>
 
 <audio id="music" loop>
@@ -276,58 +226,66 @@ Welcome kub eiei
 
 <script>
 
+/* ENTER */
 const enter=document.getElementById("enter")
 const main=document.getElementById("main")
 const music=document.getElementById("music")
 const volumeBox=document.getElementById("volumeBox")
+const bgVideo=document.getElementById("bgVideo")
 
 enter.onclick=()=>{
 music.muted=false
 music.play().catch(()=>{})
+bgVideo.play().catch(()=>{}) // 🔥 mobile fix
 enter.style.display="none"
 main.classList.add("show")
 volumeBox.classList.add("show")
 }
 
-/* VOLUME */
+/* VOLUME FIX */
 const icon=document.getElementById("musicIcon")
 const slider=document.getElementById("volumeSlider")
 
+let lastVolume = 1
+
+// initial
 music.volume = slider.value
 
 icon.onclick=()=>{
-music.muted=!music.muted
-icon.className=music.muted?"fas fa-volume-mute":"fas fa-volume-up"
+if(music.muted || music.volume===0){
+music.muted=false
+music.volume=lastVolume
+slider.value=lastVolume
+}else{
+music.muted=true
+lastVolume=music.volume
+music.volume=0
+slider.value=0
+}
+updateIcon()
 }
 
 slider.addEventListener("input",()=>{
 music.muted=false
 music.volume=parseFloat(slider.value)
+if(slider.value>0) lastVolume=slider.value
+updateIcon()
 })
 
-/* CARD 3D (PC ONLY) */
-const card=document.getElementById("card")
-
-if(window.matchMedia("(hover: hover)").matches){
-let mouseX=0,mouseY=0
-
-card.addEventListener("mousemove",(e)=>{
-const rect=card.getBoundingClientRect()
-mouseX=(e.clientX-rect.left)/rect.width-.5
-mouseY=(e.clientY-rect.top)/rect.height-.5
-})
-
-function animate(){
-card.style.transform=`rotateX(${mouseY*-10}deg) rotateY(${mouseX*10}deg)`
-requestAnimationFrame(animate)
+function updateIcon(){
+if(music.volume==0){
+icon.className="fas fa-volume-mute"
+}else if(music.volume<0.5){
+icon.className="fas fa-volume-down"
+}else{
+icon.className="fas fa-volume-up"
 }
-animate()
 }
 
 /* BIO */
 const texts=[
 "สวัสดีครับผมชื่อ ซัน ☀️",
-"Thanks for your support kub jubjub❤️"
+"Thanks for your support ❤️"
 ]
 
 let i=0,j=0,del=false
