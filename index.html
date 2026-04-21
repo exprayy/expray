@@ -233,7 +233,7 @@ font-size:20px;
 cursor:pointer;
 }
 
-/* ===== NEW (เพิ่มอย่างเดียว) ===== */
+/* SLIDER BASE */
 
 #volumeSlider{
 width:0;
@@ -247,11 +247,6 @@ border-radius:10px;
 cursor:pointer;
 }
 
-.volume-box:hover #volumeSlider{
-width:100px;
-opacity:1;
-}
-
 #volumeSlider::-webkit-slider-thumb{
 appearance:none;
 width:12px;
@@ -259,6 +254,23 @@ height:12px;
 background:#00ffd5;
 border-radius:50%;
 box-shadow:0 0 8px #00ffd5;
+}
+
+/* ===== PC ONLY ===== */
+
+@media (hover: hover) and (pointer: fine){
+  .volume-box:hover #volumeSlider{
+    width:100px;
+    opacity:1;
+  }
+}
+
+/* ===== MOBILE ===== */
+
+@media (hover: none) and (pointer: coarse){
+  #volumeSlider{
+    display:none;
+  }
 }
 
 </style>
@@ -315,15 +327,12 @@ Welcome kub eiei
 <source src="music.mp3" type="audio/mp3">
 </audio>
 
-<!-- 🔥 แก้แค่ตรงนี้ -->
 <div class="volume-box" id="volumeBox">
 <i id="musicIcon" class="fas fa-volume-up"></i>
 <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
 </div>
 
 <script>
-
-/* ENTER */
 
 const enter=document.getElementById("enter")
 const main=document.getElementById("main")
@@ -337,18 +346,6 @@ main.classList.add("show")
 volumeBox.classList.add("show")
 }
 
-/* FIX MOBILE VIDEO */
-
-const bgVideo=document.querySelector(".bg-video")
-
-document.addEventListener("visibilitychange",()=>{
-if(!document.hidden){
-bgVideo.play().catch(()=>{})
-}
-})
-
-/* VOLUME */
-
 const icon=document.getElementById("musicIcon")
 
 icon.onclick=()=>{
@@ -360,8 +357,6 @@ music.muted=true
 icon.className="fas fa-volume-mute"
 }
 }
-
-/* ===== NEW (เพิ่มอย่างเดียว) ===== */
 
 const slider=document.getElementById("volumeSlider")
 
@@ -376,66 +371,6 @@ icon.className="fas fa-volume-down"
 icon.className="fas fa-volume-up"
 }
 })
-
-/* CARD 3D */
-
-const card=document.getElementById("card")
-
-let mouseX=0
-let mouseY=0
-
-card.addEventListener("mousemove",(e)=>{
-const rect=card.getBoundingClientRect()
-mouseX=(e.clientX-rect.left)/rect.width-.5
-mouseY=(e.clientY-rect.top)/rect.height-.5
-})
-
-function animate(){
-card.style.transform=`rotateX(${mouseY*-10}deg) rotateY(${mouseX*10}deg) scale(1.02)`
-requestAnimationFrame(animate)
-}
-
-animate()
-
-/* BIO LOOP */
-
-const texts=[
-"สวัสดีครับผมชื่อ ซัน ☀️",
-"Thanks for your support kub jubjub❤️"
-]
-
-let textIndex=0
-let charIndex=0
-let deleting=false
-
-const bio=document.getElementById("bioText")
-
-function type(){
-
-let current=texts[textIndex]
-
-if(!deleting){
-bio.textContent=current.substring(0,charIndex)
-charIndex++
-if(charIndex>current.length){
-deleting=true
-setTimeout(type,2000)
-return
-}
-}else{
-bio.textContent=current.substring(0,charIndex)
-charIndex--
-if(charIndex==0){
-deleting=false
-textIndex=(textIndex+1)%texts.length
-}
-}
-
-setTimeout(type,deleting?40:70)
-
-}
-
-type()
 
 </script>
 
