@@ -18,15 +18,16 @@ body{
 background:#000;color:#fff;
 min-height:100dvh;
 display:flex;justify-content:center;align-items:center;
-overflow-x:hidden;
 padding:20px;
+overflow-x:hidden;
 }
 
 /* VIDEO */
 .bg-video{
 position:fixed;inset:0;
 width:100%;height:100%;
-object-fit:cover;z-index:-2;
+object-fit:cover;
+z-index:-2;
 }
 .bg-overlay{
 position:fixed;inset:0;
@@ -45,24 +46,30 @@ cursor:pointer;z-index:10;
 
 /* MAIN */
 .main-ui{
-opacity:0;pointer-events:none;
+opacity:0;
+pointer-events:none;
 transition:.6s;
 }
 .main-ui.show{
-opacity:1;pointer-events:auto;
+opacity:1;
+pointer-events:auto;
 }
 
 /* CARD */
 .container{
-width:100%;max-width:420px;
-padding:28px 24px;
-border-radius:25px;
+width:100%;
+max-width:480px;
+padding:32px 28px;
+border-radius:28px;
 
 background:rgba(255,255,255,.06);
 backdrop-filter:blur(35px);
 
 border:1px solid rgba(255,255,255,.15);
-box-shadow:0 15px 50px rgba(0,0,0,.6);
+
+box-shadow:
+0 20px 60px rgba(0,0,0,.6),
+inset 0 0 20px rgba(255,255,255,.05);
 
 text-align:center;
 
@@ -72,7 +79,7 @@ will-change:transform;
 
 /* PROFILE */
 .profile-img{
-width:100px;height:100px;
+width:110px;height:110px;
 border-radius:50%;
 background:url("Profile.jpg") center/cover;
 margin:auto;
@@ -80,11 +87,15 @@ margin:auto;
 
 /* NAME */
 .username{
-font-size:32px;font-weight:800;
+font-size:34px;
+font-weight:800;
+margin-top:12px;
+
 background:linear-gradient(90deg,white,#7df9ff,white);
 background-size:200%;
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
+
 animation:nameGlow 4s linear infinite;
 }
 @keyframes nameGlow{100%{background-position:200%}}
@@ -95,15 +106,16 @@ font-size:14px;
 opacity:.85;
 min-height:22px;
 line-height:1.5;
+margin-top:4px;
 }
 
 /* SOCIAL */
 .social-icons{
 display:flex;
 justify-content:center;
-gap:22px;
-font-size:20px;
-margin-top:10px;
+gap:24px;
+font-size:21px;
+margin-top:12px;
 }
 .social-icons a{
 color:white;
@@ -116,9 +128,9 @@ transform:scale(1.2);
 /* LINKS */
 .link{
 display:block;
-margin-top:12px;
-padding:14px;
-border-radius:14px;
+margin-top:14px;
+padding:15px;
+border-radius:16px;
 text-decoration:none;
 color:white;
 
@@ -128,7 +140,7 @@ border:1px solid rgba(255,255,255,.1);
 transition:.2s;
 }
 .link:hover{
-transform:translateY(-3px);
+transform:translateY(-4px);
 background:rgba(255,255,255,.18);
 }
 
@@ -137,15 +149,16 @@ background:rgba(255,255,255,.18);
 background:linear-gradient(45deg,#00ffd5,#00bfff);
 color:#000;
 font-weight:700;
-box-shadow:0 0 20px rgba(0,255,213,.5);
+box-shadow:0 0 25px rgba(0,255,213,.5);
 }
 
 /* VOLUME */
 .volume-box{
 position:fixed;
 top:20px;left:20px;
-
-display:flex;align-items:center;gap:8px;
+display:flex;
+align-items:center;
+gap:8px;
 
 background:rgba(255,255,255,.12);
 backdrop-filter:blur(20px);
@@ -158,10 +171,7 @@ transition:.3s;
 }
 .volume-box.show{opacity:1;}
 
-#musicIcon{
-font-size:20px;
-cursor:pointer;
-}
+#musicIcon{font-size:20px;cursor:pointer;}
 
 /* SLIDER */
 #volumeSlider{
@@ -173,7 +183,7 @@ transition:.25s;
 /* PC ONLY */
 @media (hover:hover) and (pointer:fine){
 .volume-box:hover #volumeSlider{
-width:100px;
+width:110px;
 opacity:1;
 }
 }
@@ -181,6 +191,28 @@ opacity:1;
 /* MOBILE */
 @media (hover:none){
 #volumeSlider{display:none;}
+}
+
+/* DESKTOP BOOST */
+@media (min-width:1024px){
+
+.container{
+max-width:520px;
+padding:36px 32px;
+}
+
+.username{font-size:36px;}
+
+.link{
+padding:16px;
+font-size:15px;
+}
+
+.social-icons{
+gap:28px;
+font-size:22px;
+}
+
 }
 
 </style>
@@ -244,7 +276,6 @@ Welcome kub eiei
 
 <script>
 
-/* ENTER */
 const enter=document.getElementById("enter")
 const main=document.getElementById("main")
 const music=document.getElementById("music")
@@ -262,7 +293,6 @@ volumeBox.classList.add("show")
 const icon=document.getElementById("musicIcon")
 const slider=document.getElementById("volumeSlider")
 
-// sync เริ่มต้น
 music.volume = slider.value
 
 icon.onclick=()=>{
@@ -270,18 +300,9 @@ music.muted=!music.muted
 icon.className=music.muted?"fas fa-volume-mute":"fas fa-volume-up"
 }
 
-// slider ใช้ได้จริง
 slider.addEventListener("input",()=>{
 music.muted=false
 music.volume=parseFloat(slider.value)
-
-if(slider.value==0){
-icon.className="fas fa-volume-mute"
-}else if(slider.value<0.5){
-icon.className="fas fa-volume-down"
-}else{
-icon.className="fas fa-volume-up"
-}
 })
 
 /* CARD 3D (PC ONLY) */
